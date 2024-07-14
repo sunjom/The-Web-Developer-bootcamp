@@ -1,6 +1,10 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const datas = require('./data.json');
+
+//static안에 절대경로를 추가해 어디에서 실행해도 같은 결과를 보여줌.
+app.use(express.static(path.join(__dirname, '/public')));
 
 //view engine은 서버에서 js로 만든 변수를 보내줘서 클라이언트에서 활용할 수 있도록 해주는 엔진.
 app.set('view engine','ejs');
@@ -18,11 +22,24 @@ app.get('/rand', (req,res) =>{
 
 app.get('/r/:raddit', (req,res) =>{
     const {raddit} = req.params;
-    res.render('radditSite',{raddit:raddit});
+    const data = datas[raddit];
+    if(data){
+        //data안에 있는 값을 전달해주기 위해 값들을 풀어서 줌
+        res.render('radditSite',{...data});
+    }else{
+        res.render('errorPage',{raddit:raddit});
+    }
 })
 
+app.get('/cats', (req,res) =>{
+    const names = ['Blue', 'Rocket', 'Monty', 'Winston']
+
+    res.render('cats',{names});
+})
+
+
 app.get('/',(req, res) =>{
-    res.send('homePage');
+    res.render('home');
 })
 
 app.listen(3000, ()=>{

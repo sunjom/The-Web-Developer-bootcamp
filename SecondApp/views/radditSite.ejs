@@ -1,12 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%=raddit%></title>
-</head>
-<body>
-    <h1>Browsing the puppies <%= raddit %></h1>
-</body>
-</html>
+<%- include('partial/header.ejs') %>
+<%- include('partial/nav.ejs') %>
+<div class="container">
+    <h1>Browsing The <%= name%></h1>
+    <h2><%= description %></h2>
+    <h3>Total : <%= subscribers %></h3>
+    <hr>
+    <% for(let i of posts) {%>
+        <article>
+            <p><%= i.title %> - <b><%= i.author %></b></p>
+            <% if(i.img){ %>
+                <img src=<%= i.img %> />
+            <%} %>
+        </article>
+    <% } %>
+  </div>
+<%- include('partial/footer.ejs') %>
